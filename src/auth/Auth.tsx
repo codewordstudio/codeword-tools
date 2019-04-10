@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React, {Component} from 'react';
 import auth0 from 'auth0-js';
 import { withApollo } from 'react-apollo';
 import { AuthProvider } from './authContext';
@@ -58,7 +58,7 @@ class Auth extends Component<AuthProps, AuthState> {
 				email,
 				password,
 			},
-			e => console.log(e)
+			(e: any) => console.log(e)
 		);
 	};
 
@@ -81,7 +81,7 @@ class Auth extends Component<AuthProps, AuthState> {
 						realm: 'Username-Password-Authentication',
 					},
 					e => {
-						console.log('done login');
+						console.log(e);
 						this.setSession({
 							user: { id: userPayload.sub || '' },
 							token: userPayload.accessToken,

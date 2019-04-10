@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"target": "es6",
+		"module": "commonjs",
+		"declaration": true,
+		"jsx": "preserve",
+		"outDir": "./dist",
+		"strict": true
+	},
+	"exclude": ["**/*.stories.*", "node_modules"]
+}
