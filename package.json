@@ -1,36 +1,37 @@
 {
-  "name": "codeword-tools",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 9009",
-    "build-storybook": "build-storybook"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ragzor/codeword-tools.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ragzor/codeword-tools/issues"
-  },
-  "homepage": "https://github.com/ragzor/codeword-tools#readme",
-  "dependencies": {
-    "auth0-js": "^9.10.1",
-    "graphql-tag": "^2.10.1",
-    "react": "^16.8.6",
-    "react-apollo": "^2.5.4"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@storybook/addon-actions": "^5.0.6",
-    "@storybook/addon-links": "^5.0.6",
-    "@storybook/addons": "^5.0.6",
-    "@storybook/react": "^5.0.6",
-    "@types/react": "^16.8.13",
-    "babel-loader": "^8.0.5"
-  }
+	"name": "codeword-tools",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"storybook": "start-storybook -p 9009",
+		"build-storybook": "build-storybook"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ragzor/codeword-tools.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/ragzor/codeword-tools/issues"
+	},
+	"homepage": "https://github.com/ragzor/codeword-tools#readme",
+	"dependencies": {
+		"@types/auth0-js": "^8.11.12",
+		"auth0-js": "^9.10.1",
+		"graphql-tag": "^2.10.1",
+		"react": "^16.8.6",
+		"react-apollo": "^2.5.4"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.4.3",
+		"@storybook/addon-actions": "^5.0.6",
+		"@storybook/addon-links": "^5.0.6",
+		"@storybook/addons": "^5.0.6",
+		"@storybook/react": "^5.0.6",
+		"@types/react": "^16.8.13",
+		"babel-loader": "^8.0.5"
+	}
 }

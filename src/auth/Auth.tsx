@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import auth0 from 'auth0-js';
+import * as React from 'react';
+import { Component } from 'react';
+import * as auth0 from 'auth0-js';
 import { withApollo } from 'react-apollo';
 import { AuthProvider } from './authContext';
 import gql from 'graphql-tag';
