@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
 import auth0 from 'auth0-js';
 import { withApollo } from 'react-apollo';
-
 import { AuthProvider } from './authContext';
-import { AUTH_CONFIG } from './Auth0variables';
 import gql from 'graphql-tag';
 
-const auth = new auth0.WebAuth({
-	domain: AUTH_CONFIG.domain,
-	clientID: AUTH_CONFIG.clientId,
-	redirectUri: AUTH_CONFIG.callbackUrl,
-	// audience: `https://${AUTH_CONFIG.domain}/userinfo`,
-	responseType: 'token id_token',
-});
-
 type AuthProps = {
-	client: any; // TODO: Use Apollo type here @critical
+	client: any;
 	children: any;
+	domain: string;
+	clientId: string;
+	callbackUrl: string;
 };
 
 type AuthState = {
@@ -34,6 +27,13 @@ type sessionDatatype = {
 };
 
 class Auth extends Component<AuthProps, AuthState> {
+	auth = new auth0.WebAuth({
+		domain: this.props.domain,
+		clientID: this.props.clientId,
+		redirectUri: this.props.callbackUrl,
+		responseType: 'token id_token',
+	});
+
 	state = {
 		authenticated:
 			typeof window === 'undefined' || window.localStorage.getItem('token')
@@ -52,7 +52,7 @@ class Auth extends Component<AuthProps, AuthState> {
 		email: string;
 		password: string;
 	}) => {
-		auth.login(
+		this.auth.login(
 			{
 				realm: 'Username-Password-Authentication',
 				email,
@@ -64,7 +64,7 @@ class Auth extends Component<AuthProps, AuthState> {
 
 	handleSignUp = ({ email, password }: any) => {
 		console.log('started signup');
-		auth.signup(
+		this.auth.signup(
 			{
 				email,
 				password,
@@ -74,7 +74,7 @@ class Auth extends Component<AuthProps, AuthState> {
 				console.log(error, userPayload);
 				if (error) return;
 
-				auth.login(
+				this.auth.login(
 					{
 						email,
 						password,
@@ -96,13 +96,13 @@ class Auth extends Component<AuthProps, AuthState> {
 	};
 
 	loginWithGoogle(): void {
-		auth.authorize({
+		this.auth.authorize({
 			connection: 'google-oauth2',
 		});
 	}
 
 	loginWithlinkedIn(): void {
-		auth.authorize({
+		this.auth.authorize({
 			connection: 'linkedin',
 		});
 	}
@@ -147,7 +147,7 @@ class Auth extends Component<AuthProps, AuthState> {
 		`;
 		// don't parse twice because setSession is doing a re-render
 		!this.state.authenticated &&
-			auth.parseHash((err, authResult) => {
+			this.auth.parseHash((err, authResult) => {
 				if (authResult && authResult.accessToken && authResult.idToken) {
 					console.log('parseHash started');
 					// 1. mutate the backend
