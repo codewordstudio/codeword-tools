@@ -43,6 +43,7 @@
 		"chai": "^4.2.0",
 		"mocha": "^6.1.2",
 		"tslint": "^5.15.0",
+		"tslint-config-prettier": "^1.18.0",
 		"typescript": "^3.4.3"
 	}
 }

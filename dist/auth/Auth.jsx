@@ -1,29 +1,11 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const React = require();
-from;
-'react';
-const auth0_js_1 = require("auth0-js");
-const react_apollo_1 = require("react-apollo");
-const authContext_1 = require("./authContext");
-const graphql_tag_1 = require("graphql-tag");
-class Auth extends Component {
+import * as React from 'react';
+import * as auth0 from 'auth0-js';
+import { withApollo } from 'react-apollo';
+import { AuthProvider } from './authContext';
+import gql from 'graphql-tag';
+class Auth extends React.Component {
     constructor() {
         super(...arguments);
-        this.auth = new auth0_js_1.default.WebAuth({
-            domain: this.props.domain,
-            clientID: this.props.clientId,
-            redirectUri: this.props.callbackUrl,
-            responseType: 'token id_token',
-        });
         this.state = {
             authenticated: typeof window === 'undefined' || window.localStorage.getItem('token')
                 ? true
@@ -33,6 +15,12 @@ class Auth extends Component {
             },
             accessToken: '',
         };
+        this.auth = new auth0.WebAuth({
+            domain: this.props.domain,
+            clientID: this.props.clientId,
+            redirectUri: this.props.callbackUrl,
+            responseType: 'token id_token',
+        });
         this.handleAuthentication = ({ email, password, }) => {
             this.auth.login({
                 realm: 'Username-Password-Authentication',
@@ -48,8 +36,9 @@ class Auth extends Component {
                 connection: 'Username-Password-Authentication',
             }, (error, userPayload) => {
                 console.log(error, userPayload);
-                if (error)
+                if (error) {
                     return;
+                }
                 this.auth.login({
                     email,
                     password,
@@ -76,15 +65,15 @@ class Auth extends Component {
                 accessToken: data.token,
                 user,
             });
-            // TODO: check if localstorage is available or not and if it isn't use cookies to set session instead.
+            // TODO: check if localstorage is available or not and if it isn't use
+            // cookies to set session instead.
             const isBrowser = typeof window !== 'undefined';
             if (isBrowser) {
                 window.localStorage.setItem('token', data.login.token);
             }
         };
-        this.handleCallback = () => __awaiter(this, void 0, void 0, function* () {
-            console.log('callback started');
-            const SIGNUP_MUTATION = graphql_tag_1.default `
+        this.handleCallback = async () => {
+            const SIGNUP_MUTATION = gql `
 			# Write your query or mutation here
 			mutation(
 				$email: String!
@@ -103,7 +92,7 @@ class Auth extends Component {
 			}
 		`;
             // don't parse twice because setSession is doing a re-render
-            !this.state.authenticated &&
+            if (!this.state.authenticated) {
                 this.auth.parseHash((err, authResult) => {
                     if (authResult && authResult.accessToken && authResult.idToken) {
                         console.log('parseHash started');
@@ -132,7 +121,8 @@ class Auth extends Component {
                     }
                     history.back();
                 });
-        });
+            }
+        };
         this.logout = () => {
             this.setState({
                 authenticated: false,
@@ -161,11 +151,20 @@ class Auth extends Component {
         });
     }
     render() {
-        const authProviderValue = Object.assign({}, this.state, { handleAuthentication: this.handleAuthentication, handleSignUp: this.handleSignUp, logout: this.logout, loginWithGoogle: this.loginWithGoogle, loginWithlinkedIn: this.loginWithlinkedIn, handleCallback: this.handleCallback });
+        const authProviderValue = {
+            ...this.state,
+            handleAuthentication: this.handleAuthentication,
+            handleSignUp: this.handleSignUp,
+            logout: this.logout,
+            loginWithGoogle: this.loginWithGoogle,
+            loginWithlinkedIn: this.loginWithlinkedIn,
+            handleCallback: this.handleCallback,
+        };
         setInterval(() => {
             // return if not in browser
-            if (typeof window == 'undefined')
+            if (typeof window === 'undefined') {
                 return;
+            }
             console.log('timer running');
             // if they deleted the token but they are shown authenicated in UI
             if (!localStorage.getItem('token') && this.state.authenticated) {
@@ -176,9 +175,10 @@ class Auth extends Component {
                 this.setState({ authenticated: true });
             }
         }, 1000 * 60);
-        return (<authContext_1.AuthProvider value={authProviderValue}>
+        return (<AuthProvider value={authProviderValue}>
 				{this.props.children}
-			</authContext_1.AuthProvider>);
+			</AuthProvider>);
     }
 }
-exports.default = react_apollo_1.withApollo(Auth);
+export default withApollo(Auth);
+//# sourceMappingURL=Auth.jsx.map

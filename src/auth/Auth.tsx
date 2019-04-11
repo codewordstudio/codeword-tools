@@ -1,40 +1,33 @@
-import * as React, {Component} from 'react';
-import auth0 from 'auth0-js';
+import * as React from 'react';
+import * as auth0 from 'auth0-js';
 import { withApollo } from 'react-apollo';
 import { AuthProvider } from './authContext';
 import gql from 'graphql-tag';
 
-type AuthProps = {
+interface AuthProps {
 	client: any;
 	children: any;
 	domain: string;
 	clientId: string;
 	callbackUrl: string;
-};
+}
 
-type AuthState = {
+interface AuthState {
 	authenticated: boolean;
 	user: {
 		role: string;
 	};
 	accessToken: string;
-};
+}
 
-type sessionDatatype = {
+interface SessionDatatype {
 	user: { id: string };
 	token: string;
 	login: { token: string };
-};
+}
 
-class Auth extends Component<AuthProps, AuthState> {
-	auth = new auth0.WebAuth({
-		domain: this.props.domain,
-		clientID: this.props.clientId,
-		redirectUri: this.props.callbackUrl,
-		responseType: 'token id_token',
-	});
-
-	state = {
+class Auth extends React.Component<AuthProps, AuthState> {
+	public state = {
 		authenticated:
 			typeof window === 'undefined' || window.localStorage.getItem('token')
 				? true
@@ -44,6 +37,12 @@ class Auth extends Component<AuthProps, AuthState> {
 		},
 		accessToken: '',
 	};
+	private auth = new auth0.WebAuth({
+		domain: this.props.domain,
+		clientID: this.props.clientId,
+		redirectUri: this.props.callbackUrl,
+		responseType: 'token id_token',
+	});
 
 	handleAuthentication = ({
 		email,
@@ -72,7 +71,9 @@ class Auth extends Component<AuthProps, AuthState> {
 			},
 			(error, userPayload) => {
 				console.log(error, userPayload);
-				if (error) return;
+				if (error) {
+					return;
+				}
 
 				this.auth.login(
 					{
@@ -107,7 +108,7 @@ class Auth extends Component<AuthProps, AuthState> {
 		});
 	}
 
-	setSession = (data: sessionDatatype) => {
+	setSession = (data: SessionDatatype) => {
 		const user = {
 			// TODO: Add correct user details here
 			id: data.user.id,
@@ -118,7 +119,8 @@ class Auth extends Component<AuthProps, AuthState> {
 			accessToken: data.token,
 			user,
 		});
-		// TODO: check if localstorage is available or not and if it isn't use cookies to set session instead.
+		// TODO: check if localstorage is available or not and if it isn't use
+		// cookies to set session instead.
 		const isBrowser = typeof window !== 'undefined';
 		if (isBrowser) {
 			window.localStorage.setItem('token', data.login.token);
@@ -126,7 +128,6 @@ class Auth extends Component<AuthProps, AuthState> {
 	};
 
 	handleCallback = async () => {
-		console.log('callback started');
 		const SIGNUP_MUTATION = gql`
 			# Write your query or mutation here
 			mutation(
@@ -146,7 +147,7 @@ class Auth extends Component<AuthProps, AuthState> {
 			}
 		`;
 		// don't parse twice because setSession is doing a re-render
-		!this.state.authenticated &&
+		if (!this.state.authenticated) {
 			this.auth.parseHash((err, authResult) => {
 				if (authResult && authResult.accessToken && authResult.idToken) {
 					console.log('parseHash started');
@@ -174,6 +175,7 @@ class Auth extends Component<AuthProps, AuthState> {
 				}
 				history.back();
 			});
+		}
 	};
 
 	logout = () => {
@@ -208,7 +210,9 @@ class Auth extends Component<AuthProps, AuthState> {
 
 		setInterval(() => {
 			// return if not in browser
-			if (typeof window == 'undefined') return;
+			if (typeof window === 'undefined') {
+				return;
+			}
 			console.log('timer running');
 			// if they deleted the token but they are shown authenicated in UI
 			if (!localStorage.getItem('token') && this.state.authenticated) {
