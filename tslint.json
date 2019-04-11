@@ -17,7 +17,7 @@
 			}
 		],
 		"variable-name": [
-			true,
+			false,
 			"allow-leading-underscore",
 			"ban-keywords",
 			"check-format"

@@ -1,4 +1,2 @@
-export function IsNullOrEmpty(str) {
-    return str == null || str.trim().length === 0;
-}
+export * from './auth/Auth';
 //# sourceMappingURL=index.js.map

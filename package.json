@@ -4,10 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "tsc",
+		"build": "rm -rf dist; tsc",
 		"build:watch": "tsc --watch",
 		"lint": "tslint --project \"./tsconfig.json\"",
-		"test": "mocha --reporter spec",
 		"storybook": "start-storybook -p 9009",
 		"build-storybook": "build-storybook"
 	},
