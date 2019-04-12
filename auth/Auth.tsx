@@ -4,6 +4,7 @@ import { withApollo } from 'react-apollo';
 import { AuthProvider } from './authContext';
 import gql from 'graphql-tag';
 
+//COMMENT
 interface AuthProps {
 	client: any;
 	children: any;
