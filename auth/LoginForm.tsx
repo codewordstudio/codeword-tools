@@ -1,26 +1,41 @@
 import React, { Component } from 'react';
-import { Formik, Field, FormikProps } from 'formik';
+import { Formik, Field, FormikProps, FieldProps } from 'formik';
 import * as Yup from 'yup';
 import { AuthConsumer } from './authContext';
 import styled from 'styled-components';
 import Button from '../../../components/Button';
+import SocialButton from '../../../components/SocialButton';
 import Input from '../form/Input';
 
-const Form = styled.form``;
-const Status = styled.span`
-	color: red;
-	margin-bottom: 1rem;
-	transition: all 200ms ease-in-out;
+const StyledFormDivider = styled.div`
+	z-index: 0;
+	position: relative;
+	text-align: center;
+	margin: 25px 0;
+	&:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 0;
+		right: 0;
+		border-bottom: 1px solid #e7e7e7;
+		z-index: -1;
+	}
 `;
-interface LoginProps {
-	handleAuthentication: any;
-}
+const StyledFormDividerContent = styled.div`
+	display: inline-block;
+	padding: 0 0.5em;
+	background: #fff;
+`;
+
+interface LoginProps {}
 interface LoginState {}
 
 interface LoginFormValues {
 	email: string;
 	password: string;
 }
+// TODO: convert it to SFC
 class Login extends Component<LoginProps, LoginState> {
 	LoginSchema = Yup.object().shape({
 		email: Yup.string().required('Required'),
@@ -37,6 +52,12 @@ class Login extends Component<LoginProps, LoginState> {
 						}}
 						render={(formikBag: FormikProps<LoginFormValues>) => (
 							<React.Fragment>
+								<SocialButton platform="google">
+									Sign In With Google
+								</SocialButton>
+								<StyledFormDivider>
+									<StyledFormDividerContent>Or</StyledFormDividerContent>
+								</StyledFormDivider>
 								<Field
 									name="email"
 									render={({ field, form }: FieldProps<LoginFormValues>) => (
@@ -51,9 +72,22 @@ class Login extends Component<LoginProps, LoginState> {
 								<Field
 									name="password"
 									render={({ field, form }: FieldProps<LoginFormValues>) => (
-										<Input type="password" label="Password" field={field} />
+										<Input
+											name="password"
+											type="password"
+											label="Password"
+											field={field}
+										/>
 									)}
 								/>
+								<Button
+									color="black"
+									large={true}
+									full={true}
+									disabled={formikBag.isSubmitting}
+								>
+									Continue With Email
+								</Button>
 							</React.Fragment>
 						)}
 					/>

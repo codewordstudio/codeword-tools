@@ -48,12 +48,14 @@ export const FloatingLabel = styled.label`
 	margin-left: 15px; /* Should be same as input margin left */
 	line-height: 56px;
 	/* To also make the label clickable */
-	z-index: -1;
+	// TODO: label is not clickable because z-index is not -1
+	z-index: 1;
 	transition: all 150ms ease;
 `;
 
 export const StyledInputWrapper = styled.div`
-	position: relative;
+	display: flex;
+	margin-bottom: 20px;
 `;
 
 interface Props {
