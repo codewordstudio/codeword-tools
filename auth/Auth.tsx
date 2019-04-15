@@ -129,6 +129,7 @@ class Auth extends React.Component<AuthProps, AuthState> {
 	};
 
 	handleCallback = async () => {
+		console.log('callbacked');
 		const SIGNUP_MUTATION = gql`
 			# Write your query or mutation here
 			mutation(
@@ -149,7 +150,9 @@ class Auth extends React.Component<AuthProps, AuthState> {
 		`;
 		// don't parse twice because setSession is doing a re-render
 		if (!this.state.authenticated) {
+			console.log('state is not authenticated');
 			this.auth.parseHash((err, authResult) => {
+				console.log('auth is parsed');
 				if (authResult && authResult.accessToken && authResult.idToken) {
 					console.log('parseHash started');
 					// 1. mutate the backend

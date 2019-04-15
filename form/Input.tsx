@@ -27,11 +27,12 @@ export const FloatingInput: any = styled(ResetInput)`
 	font-size: 14px;
 	padding-top: 29px;
 	position: relative;
-	border: 1px solid #e7e7e7;
+	border: 1px solid;
+	border-color: ${({ error }: any) => (error ? 'red' : '#e7e7e7')};
 	transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
 
 	&:focus {
-		border: 1px solid #000;
+		border-color: #000;
 	}
 
 	&:focus + label,
@@ -45,6 +46,7 @@ export const FloatingInput: any = styled(ResetInput)`
 export const FloatingLabel = styled.label`
 	position: absolute;
 	font-size: 14px;
+	color: ${({ error }: any) => (error ? 'red' : '')};
 	margin-left: 15px; /* Should be same as input margin left */
 	line-height: 56px;
 	/* To also make the label clickable */
@@ -67,12 +69,15 @@ interface Props {
 	label: string;
 	field: {};
 	type: string;
+	error: string;
 }
 
-const Input: React.SFC<Props> = ({ name, label, field, type }) => (
+const Input: React.SFC<Props> = ({ name, label, field, type, error }) => (
 	<StyledInputWrapper>
-		<FloatingInput type={type} placeholder=" " {...field} />
-		<FloatingLabel htmlFor={name}>{label}</FloatingLabel>
+		<FloatingInput error={error} type={type} placeholder=" " {...field} />
+		<FloatingLabel error={error} htmlFor={name}>
+			{error || label}
+		</FloatingLabel>
 	</StyledInputWrapper>
 );
 

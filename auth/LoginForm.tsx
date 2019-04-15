@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Formik, Field, FormikProps, FieldProps } from 'formik';
+import { Formik, Field, FormikProps, FieldProps, Form } from 'formik';
 import * as Yup from 'yup';
 import { AuthConsumer } from './authContext';
 import styled from 'styled-components';
@@ -38,20 +38,45 @@ interface LoginFormValues {
 // TODO: convert it to SFC
 class Login extends Component<LoginProps, LoginState> {
 	LoginSchema = Yup.object().shape({
-		email: Yup.string().required('Required'),
-		password: Yup.string().required('Required'),
+		email: Yup.string()
+			.email('Oops! That looks like an invalid Email Address!')
+			.required('Please fill out your email address!'),
+		password: Yup.string().required('Please fill out your password!'),
 	});
 	render() {
 		return (
 			<AuthConsumer>
-				{({ handleAuthentication }: any) => (
+				{auth => (
 					<Formik
 						initialValues={{
 							email: '',
 							password: '',
 						}}
+						validationSchema={this.LoginSchema}
+						// Validate only on submit
+						validateOnChange={false}
+						validateOnBlur={false}
+						onSubmit={(values, { setSubmitting, setStatus }) => {
+							let { email, password } = values;
+							// Try to login the user, if login doesn't happen throw the error
+							auth.handleAuthentication({
+								email,
+								password,
+							});
+							// .catch((e: any) => {
+							// 	console.log(e.graphQLErrors);
+							// 	setStatus({
+							// 		message: e.graphQLErrors[0].message,
+							// 	});
+							// 	return;
+							// });
+							// set formic submitting to false
+							setSubmitting(false);
+							// Redirect people after logging in.
+							// props.history.push("/");
+						}}
 						render={(formikBag: FormikProps<LoginFormValues>) => (
-							<React.Fragment>
+							<Form>
 								<SocialButton platform="google">
 									Sign In With Google
 								</SocialButton>
@@ -60,14 +85,17 @@ class Login extends Component<LoginProps, LoginState> {
 								</StyledFormDivider>
 								<Field
 									name="email"
-									render={({ field, form }: FieldProps<LoginFormValues>) => (
-										<Input
-											name="email"
-											type="text"
-											label="Email"
-											field={field}
-										/>
-									)}
+									render={({ field, form }: FieldProps<LoginFormValues>) => {
+										return (
+											<Input
+												name="email"
+												type="text"
+												label="Email"
+												field={field}
+												error={form.errors.email}
+											/>
+										);
+									}}
 								/>
 								<Field
 									name="password"
@@ -77,18 +105,21 @@ class Login extends Component<LoginProps, LoginState> {
 											type="password"
 											label="Password"
 											field={field}
+											error={form.errors.password}
 										/>
 									)}
 								/>
 								<Button
 									color="black"
+									type="submit"
+									design="solid"
 									large={true}
 									full={true}
 									disabled={formikBag.isSubmitting}
 								>
-									Continue With Email
+									Login
 								</Button>
-							</React.Fragment>
+							</Form>
 						)}
 					/>
 				)}
