@@ -45,13 +45,7 @@ class Auth extends React.Component<AuthProps, AuthState> {
 		responseType: 'token id_token',
 	});
 
-	handleAuthentication = ({
-		email,
-		password,
-	}: {
-		email: string;
-		password: string;
-	}) => {
+	handleAuthentication = ({ email, password }) => {
 		this.auth.login(
 			{
 				realm: 'Username-Password-Authentication',
