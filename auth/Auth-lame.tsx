@@ -86,7 +86,7 @@ class Auth extends React.Component<AuthProps, AuthState> {
 					}
 				);
 
-				// TODO: find if sub is the ID of user
+				// @todo find if sub is the ID of user
 			}
 		);
 	};
@@ -105,7 +105,7 @@ class Auth extends React.Component<AuthProps, AuthState> {
 
 	setSession = (data: SessionDatatype) => {
 		const user = {
-			// TODO: Add correct user details here
+			// @todo Add correct user details here
 			id: data.user.id,
 			role: 'JOBSEEKER',
 		};
@@ -114,7 +114,7 @@ class Auth extends React.Component<AuthProps, AuthState> {
 			accessToken: data.token,
 			user,
 		});
-		// TODO: check if localstorage is available or not and if it isn't use
+		// @todo check if localstorage is available or not and if it isn't use
 		// cookies to set session instead.
 		const isBrowser = typeof window !== 'undefined';
 		if (isBrowser) {
@@ -188,7 +188,7 @@ class Auth extends React.Component<AuthProps, AuthState> {
 		// Remove localstorage token
 		const isBrowser = typeof window !== 'undefined';
 		if (isBrowser) {
-			window.localStorage.removeItem('token'); // TODO: Get a better token name LOL
+			window.localStorage.removeItem('token'); // @todo Get a better token name LOL
 		}
 
 		// clear apollo store

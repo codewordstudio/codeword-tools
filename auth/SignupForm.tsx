@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Formik, Field, FormikProps, FieldProps, Form } from 'formik';
 import * as Yup from 'yup';
-import { authorize, authorizeWithGoogle } from '../../tools/auth/auth0';
+import { signup, authorizeWithGoogle } from '../../tools/auth/auth0';
 import styled from 'styled-components';
 import Button from '../../../components/Button';
 import SocialButton from '../../../components/SocialButton';
@@ -36,7 +36,7 @@ interface SignupFormValues {
 	email: string;
 	password: string;
 }
-// TODO: convert it to SFC
+// @todo convert it to SFC
 class Signup extends Component<SignupProps, SignupState> {
 	SignupSchema = Yup.object().shape({
 		name: Yup.string().required('Please fill out your name!'),
@@ -61,7 +61,7 @@ class Signup extends Component<SignupProps, SignupState> {
 				onSubmit={(values, { setSubmitting, setStatus }) => {
 					let { email, password, name } = values;
 					// Try to Signup the user, if Signup doesn't happen throw the error
-					authorize(email, password);
+					signup(email, password);
 					// .catch((e: any) => {
 					// 	console.log(e.graphQLErrors);
 					// setStatus({

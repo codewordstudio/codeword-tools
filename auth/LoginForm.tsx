@@ -35,7 +35,7 @@ interface LoginFormValues {
 	email: string;
 	password: string;
 }
-// TODO: convert it to SFC
+// @todo convert it to SFC
 class Login extends Component<LoginProps, LoginState> {
 	LoginSchema = Yup.object().shape({
 		email: Yup.string()

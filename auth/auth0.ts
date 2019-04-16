@@ -20,8 +20,8 @@ export const authorize = (email, password) =>
 			email,
 			password,
 		},
-		e => {
-			console.log(e);
+		err => {
+			console.log(err);
 		}
 	);
 export const authorizeWithGoogle = () => {
@@ -29,8 +29,14 @@ export const authorizeWithGoogle = () => {
 		connection: 'google-oauth2',
 	});
 };
-export const signup = () => {
-	// getAuth0().signup();
+export const signup = (email, password) => {
+	// @todo save name as meta deta in auth0 database
+	getAuth0().signup(
+		{ connection: 'Username-Password-Authentication', email, password },
+		err => {
+			console.log(err);
+		}
+	);
 };
 export const logout = () => getAuth0().logout({ returnTo: getBaseUrl() });
 export const parseHash = callback => getAuth0().parseHash(callback);
