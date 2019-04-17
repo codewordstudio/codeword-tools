@@ -31,9 +31,10 @@ export const authorizeWithGoogle = () => {
 };
 export const signup = (email, password) => {
 	// @todo save name as meta deta in auth0 database
-	getAuth0().signup(
+	return getAuth0().signup(
 		{ connection: 'Username-Password-Authentication', email, password },
-		err => {
+		(err, userPayload) => {
+			console.log(userPayload);
 			console.log(err);
 		}
 	);
