@@ -61,18 +61,10 @@ class Signup extends Component<SignupProps, SignupState> {
 				onSubmit={(values, { setSubmitting, setStatus }) => {
 					let { email, password, name } = values;
 					// Try to Signup the user, if Signup doesn't happen throw the error
-					signup(email, password);
-					// .catch((e: any) => {
-					// 	console.log(e.graphQLErrors);
-					// setStatus({
-					// 	message: e.graphQLErrors[0].message,
-					// });
-					// 	return;
-					// });
-					// set formic submitting to false
+					signup(email, password, name).catch(err => {
+						console.log(err);
+					});
 					setSubmitting(false);
-					// Redirect people after logging in.
-					// props.history.push("/");
 				}}
 				render={(formikBag: FormikProps<SignupFormValues>) => (
 					<React.Fragment>

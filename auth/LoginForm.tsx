@@ -55,21 +55,19 @@ class Login extends Component<LoginProps, LoginState> {
 				// Validate only on submit
 				validateOnChange={false}
 				validateOnBlur={false}
-				onSubmit={(values, { setSubmitting, setStatus }) => {
+				onSubmit={async (values, { setSubmitting, setStatus }) => {
 					let { email, password } = values;
 					// Try to login the user, if login doesn't happen throw the error
-					authorize(email, password);
-					// .catch((e: any) => {
-					// 	console.log(e.graphQLErrors);
-					// setStatus({
-					// 	message: e.graphQLErrors[0].message,
-					// });
-					// 	return;
-					// });
-					// set formic submitting to false
-					setSubmitting(false);
-					// Redirect people after logging in.
-					// props.history.push("/");
+					await authorize(email, password).catch(err => {
+						if (err && err.code === 'access_denied') {
+							// @todo Form Status and error message update
+							// @body Form Set Status & display a pretty error message above the form
+							// setStatus({
+							// 	message: e.graphQLErrors[0].message,
+							// });
+						}
+						console.log(err);
+					});
 				}}
 				render={(formikBag: FormikProps<LoginFormValues>) => (
 					<React.Fragment>
