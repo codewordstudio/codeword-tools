@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Formik, Field, FormikProps, FieldProps, Form } from 'formik';
 import * as Yup from 'yup';
+import { withApollo } from 'react-apollo';
 import { signup, authorizeWithGoogle } from '../../tools/auth/auth0';
 import styled from 'styled-components';
 import Button from '../../../components/Button';
@@ -61,7 +62,7 @@ class Signup extends Component<SignupProps, SignupState> {
 				onSubmit={(values, { setSubmitting, setStatus }) => {
 					let { email, password, name } = values;
 					// Try to Signup the user, if Signup doesn't happen throw the error
-					signup(email, password, name).catch(err => {
+					signup(email, password, name, this.props.client).catch(err => {
 						console.log(err);
 					});
 					setSubmitting(false);
@@ -133,4 +134,4 @@ class Signup extends Component<SignupProps, SignupState> {
 	}
 }
 
-export default Signup;
+export default withApollo(Signup);
