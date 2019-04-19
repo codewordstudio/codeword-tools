@@ -1,4 +1,5 @@
 import auth0 from 'auth0-js';
+import { signupOnPrisma } from './prisma';
 
 const getAuth0 = () => {
 	const config = require('../../../config.json');
@@ -33,7 +34,7 @@ export const authorizeWithGoogle = () => {
 		connection: 'google-oauth2',
 	});
 };
-export const signup = (email, password, name) => {
+export const signup = (email, password, name, apolloClient) => {
 	return new Promise((resolve, reject) => {
 		getAuth0().signup(
 			{
@@ -46,9 +47,16 @@ export const signup = (email, password, name) => {
 			},
 			(err, data) => {
 				if (data) {
-					authorize(email, password).catch(err => {
-						reject(err);
-					});
+					console.log(data);
+					signupOnPrisma(email, name, data.Id, 'local', apolloClient)
+						.then(data => {
+							authorize(email, password).catch(err => {
+								reject(err);
+							});
+						})
+						.catch(err => {
+							console.log('An Error Occured!');
+						});
 					resolve(data);
 				}
 				if (err) reject(err);
