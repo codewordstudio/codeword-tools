@@ -20,11 +20,11 @@ const SIGNUP_MUTATION = gql`
 `;
 
 export const signupOnPrisma = (
-	email,
-	name,
-	authid,
-	authmethod,
-	apolloClient
+	email: any,
+	name: any,
+	authid: any,
+	authmethod: any,
+	apolloClient: any
 ) => {
 	return new Promise((resolve, reject) => {
 		apolloClient
@@ -38,7 +38,7 @@ export const signupOnPrisma = (
 					email: email,
 				},
 			})
-			.then(data => {
+			.then((data: any) => {
 				resolve(data);
 			})
 			.catch((error: any) => {

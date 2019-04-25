@@ -14,7 +14,7 @@ const getAuth0 = () => {
 
 const getBaseUrl = () => `${window.location.protocol}//${window.location.host}`;
 
-export const authorize = (email, password) => {
+export const authorize = (email: string, password: string) => {
 	return new Promise((resolve, reject) => {
 		getAuth0().login(
 			{
@@ -34,7 +34,12 @@ export const authorizeWithGoogle = () => {
 		connection: 'google-oauth2',
 	});
 };
-export const signup = (email, password, name, apolloClient) => {
+export const signup = (
+	email: string,
+	password: string,
+	name: string,
+	apolloClient: any
+) => {
 	return new Promise((resolve, reject) => {
 		getAuth0().signup(
 			{
@@ -67,4 +72,4 @@ export const signup = (email, password, name, apolloClient) => {
 // todo: Add polling to check for local cookies
 // body: add polling to check if local sign in data is tampered with or not https://auth0.com/docs/libraries/auth0js/v9#polling-with-checksession-
 export const logout = () => getAuth0().logout({ returnTo: getBaseUrl() });
-export const parseHash = callback => getAuth0().parseHash(callback);
+export const parseHash = (callback: any) => getAuth0().parseHash(callback);

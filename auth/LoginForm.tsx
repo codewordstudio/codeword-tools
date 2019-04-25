@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { authorize, authorizeWithGoogle } from '../../tools/auth/auth0';
 import styled from 'styled-components';
 import Button from '../../../components/Button';
-import SocialButton from '../../../components/SocialButton';
+// import SocialButton from '../../../components/SocialButton';
 import Input from '../form/Input';
 
 const StyledFormDivider = styled.div`
@@ -71,9 +71,7 @@ class Login extends Component<LoginProps, LoginState> {
 				}}
 				render={(formikBag: FormikProps<LoginFormValues>) => (
 					<React.Fragment>
-						<SocialButton onClick={authorizeWithGoogle} platform="google">
-							Sign In With Google
-						</SocialButton>
+						<button onClick={authorizeWithGoogle}>Sign In With Google</button>
 						<Form>
 							<StyledFormDivider>
 								<StyledFormDividerContent>Or</StyledFormDividerContent>
@@ -87,7 +85,7 @@ class Login extends Component<LoginProps, LoginState> {
 											type="text"
 											label="Email"
 											field={field}
-											error={form.errors.email}
+											error={form.errors.email || ''}
 										/>
 									);
 								}}
@@ -100,20 +98,20 @@ class Login extends Component<LoginProps, LoginState> {
 										type="password"
 										label="Password"
 										field={field}
-										error={form.errors.password}
+										error={form.errors.password || ''}
 									/>
 								)}
 							/>
-							<Button
-								color="black"
+							<button
+								// color="black"
 								type="submit"
-								design="solid"
-								large={true}
-								full={true}
+								// design="solid"
+								// large={true}
+								// full={true}
 								disabled={formikBag.isSubmitting}
 							>
 								Login
-							</Button>
+							</button>
 						</Form>
 					</React.Fragment>
 				)}
