@@ -5,14 +5,14 @@ const SIGNUP_MUTATION = gql`
 	mutation(
 		$email: String!
 		$name: String!
-		$authid: String!
-		$authmethod: String!
+		$authId: String!
+		$authMethod: String!
 	) {
 		createUser(
 			name: $name
 			email: $email
-			authid: $authid
-			authmethod: $authmethod
+			authid: $authId
+			authmethod: $authMethod
 		) {
 			id
 		}
@@ -22,18 +22,19 @@ const SIGNUP_MUTATION = gql`
 export const signupOnPrisma = (
 	email: any,
 	name: any,
-	authid: any,
+	authId: any,
 	authmethod: any,
-	apolloClient: any
+	apolloClient: any,
+	query?: any
 ) => {
 	return new Promise((resolve, reject) => {
 		apolloClient
 			.mutate({
-				mutation: SIGNUP_MUTATION,
+				mutation: query || SIGNUP_MUTATION,
 				variables: {
-					authid: authid,
+					authId: authId,
 					// we only allow local now
-					authmethod: authmethod,
+					authMethod: authmethod,
 					name: name,
 					email: email,
 				},
