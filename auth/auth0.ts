@@ -34,11 +34,12 @@ export const authorizeWithGoogle = () => {
 		connection: 'google-oauth2',
 	});
 };
-export const signup = (
+export const signupWithLogin = (
 	email: string,
 	password: string,
 	name: string,
-	apolloClient: any
+	apolloClient: any,
+	query?: any
 ) => {
 	return new Promise((resolve, reject) => {
 		getAuth0().signup(
@@ -52,17 +53,50 @@ export const signup = (
 			},
 			(err, data) => {
 				if (data) {
-					console.log(data);
-					signupOnPrisma(email, name, data.Id, 'local', apolloClient)
+					signupOnPrisma(email, name, data.Id, 'local', apolloClient, query)
 						.then(data => {
-							authorize(email, password).catch(err => {
-								reject(err);
-							});
+							authorize(email, password)
+								.then()
+								.catch(err => {
+									reject(err);
+								});
 						})
 						.catch(err => {
 							console.log('An Error Occured!');
 						});
-					resolve(data);
+				}
+				if (err) reject(err);
+			}
+		);
+	});
+};
+
+export const signupWithoutLogin = (
+	email: string,
+	password: string,
+	name: string,
+	apolloClient: any,
+	query?: any
+) => {
+	return new Promise((resolve, reject) => {
+		getAuth0().signup(
+			{
+				connection: 'Username-Password-Authentication',
+				email,
+				password,
+				user_metadata: {
+					name,
+				},
+			},
+			(err, data) => {
+				if (data) {
+					signupOnPrisma(email, name, data.Id, 'local', apolloClient, query)
+						.then(data => {
+							resolve(data);
+						})
+						.catch(err => {
+							console.log('An Error Occured!', err);
+						});
 				}
 				if (err) reject(err);
 			}
