@@ -11,7 +11,7 @@ const SIGNUP_MUTATION = gql`
 		createUser(
 			name: $name
 			email: $email
-			authid: $authId
+			authId: $authId
 			authmethod: $authMethod
 		) {
 			id
@@ -23,7 +23,7 @@ export const signupOnPrisma = (
 	email: any,
 	name: any,
 	authId: any,
-	authmethod: any,
+	authMethod: any,
 	apolloClient: any,
 	query?: any
 ) => {
@@ -34,7 +34,7 @@ export const signupOnPrisma = (
 				variables: {
 					authId: authId,
 					// we only allow local now
-					authMethod: authmethod,
+					authMethod: authMethod,
 					name: name,
 					email: email,
 				},

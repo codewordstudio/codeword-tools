@@ -62,6 +62,7 @@ export const signupWithLogin = (
 								});
 						})
 						.catch(err => {
+							console.log(err);
 							console.log('An Error Occured!');
 						});
 				}

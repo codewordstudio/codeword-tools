@@ -63,11 +63,15 @@ class Signup extends Component<any, SignupState> {
 				onSubmit={(values, { setSubmitting, setStatus }) => {
 					let { email, password, name } = values;
 					// Try to Signup the user, if Signup doesn't happen throw the error
-					signupWithLogin(email, password, name, this.props.client).catch(
-						err => {
-							console.log(err);
-						}
-					);
+					signupWithLogin(
+						email,
+						password,
+						name,
+						this.props.client,
+						this.props.query
+					).catch(err => {
+						console.log(err);
+					});
 					setSubmitting(false);
 				}}
 				render={(formikBag: FormikProps<SignupFormValues>) => (
