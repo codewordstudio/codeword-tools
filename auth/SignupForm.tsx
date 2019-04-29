@@ -30,7 +30,10 @@ const StyledFormDividerContent = styled.div`
 
 // interface SignupProps {
 // 	client: any;
+<<<<<<< HEAD
 // 	query: any;
+=======
+>>>>>>> b464dd91f5db60a2c6257f458ef335d5578322f9
 // }
 interface SignupState {}
 
@@ -40,7 +43,10 @@ interface SignupFormValues {
 	password: string;
 }
 // @todo convert it to SFC
+<<<<<<< HEAD
 // @todo add props definition
+=======
+>>>>>>> b464dd91f5db60a2c6257f458ef335d5578322f9
 class Signup extends Component<any, SignupState> {
 	SignupSchema = Yup.object().shape({
 		name: Yup.string().required('Please fill out your name!'),
@@ -65,11 +71,15 @@ class Signup extends Component<any, SignupState> {
 				onSubmit={(values, { setSubmitting, setStatus }) => {
 					let { email, password, name } = values;
 					// Try to Signup the user, if Signup doesn't happen throw the error
-					signupWithLogin(email, password, name, this.props.client).catch(
-						err => {
-							console.log(err);
-						}
-					);
+					signupWithLogin(
+						email,
+						password,
+						name,
+						this.props.client,
+						this.props.query
+					).catch(err => {
+						console.log(err);
+					});
 					setSubmitting(false);
 				}}
 				render={(formikBag: FormikProps<SignupFormValues>) => (
