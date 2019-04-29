@@ -28,13 +28,6 @@ const StyledFormDividerContent = styled.div`
 	background: #fff;
 `;
 
-// interface SignupProps {
-// 	client: any;
-<<<<<<< HEAD
-// 	query: any;
-=======
->>>>>>> b464dd91f5db60a2c6257f458ef335d5578322f9
-// }
 interface SignupState {}
 
 interface SignupFormValues {
@@ -43,10 +36,7 @@ interface SignupFormValues {
 	password: string;
 }
 // @todo convert it to SFC
-<<<<<<< HEAD
 // @todo add props definition
-=======
->>>>>>> b464dd91f5db60a2c6257f458ef335d5578322f9
 class Signup extends Component<any, SignupState> {
 	SignupSchema = Yup.object().shape({
 		name: Yup.string().required('Please fill out your name!'),
