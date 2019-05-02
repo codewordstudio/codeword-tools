@@ -13,7 +13,8 @@ const getAuth0 = () => {
 };
 
 const getBaseUrl = () => `${window.location.protocol}//${window.location.host}`;
-
+// TODO: JWT expires after a day.
+// BODY: Need to write a flow to renew jwt before expiration all the time.
 export const authorize = (email: string, password: string) => {
 	return new Promise((resolve, reject) => {
 		getAuth0().login(

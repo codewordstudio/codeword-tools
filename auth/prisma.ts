@@ -12,7 +12,7 @@ const SIGNUP_MUTATION = gql`
 			name: $name
 			email: $email
 			authId: $authId
-			authmethod: $authMethod
+			authMethod: $authMethod
 		) {
 			id
 		}
