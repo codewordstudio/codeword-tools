@@ -69,8 +69,8 @@ interface Props {
 	field: {};
 	type: string;
 	error: string;
-	onChange?: () => {};
-	onBlur?: () => {};
+	onChange?: () => void;
+	onBlur?: () => void;
 }
 
 const Input: React.SFC<Props> = ({
