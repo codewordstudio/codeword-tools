@@ -65,12 +65,13 @@ interface Props {
 	 * Click event handler
 	 * @default null
 	 */
+	name: string;
 	label: string;
-	field: {};
+	field: any;
 	type: string;
 	error: string;
-	onChange?: () => void;
-	onBlur?: () => void;
+	onChange?: any;
+	onBlur?: any;
 }
 
 const Input: React.SFC<Props> = ({
@@ -87,13 +88,15 @@ const Input: React.SFC<Props> = ({
 			error={error}
 			type={type}
 			placeholder=" "
-			name={field.name}
+			// @todo: Remove this name, because we're already getting it in field
+			// @body: this will break components,
+			name={name || field.name}
 			value={field.value}
-			onChange={e => {
+			onChange={(e: any) => {
 				onChange && onChange(e);
 				field.onChange(e);
 			}}
-			onBlur={e => {
+			onBlur={(e: any) => {
 				onBlur && onBlur(e);
 				field.onBlur(e);
 			}}
