@@ -12,6 +12,16 @@ const getAuth0 = () => {
 	});
 };
 
+export function RequestChangePassword(email: string, callback: any) {
+	getAuth0().changePassword(
+		{
+			connection: 'Username-Password-Authentication',
+			email,
+		},
+		callback
+	);
+}
+
 const getBaseUrl = () => `${window.location.protocol}//${window.location.host}`;
 // TODO: JWT expires after a day.
 // BODY: Need to write a flow to renew jwt before expiration all the time.
