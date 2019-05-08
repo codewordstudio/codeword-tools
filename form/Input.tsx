@@ -94,11 +94,11 @@ const Input: React.SFC<Props> = ({
 			value={field.value}
 			onChange={(e: any) => {
 				onChange && onChange(e);
-				field.onChange(e);
+				field && field.onChange(e);
 			}}
 			onBlur={(e: any) => {
 				onBlur && onBlur(e);
-				field.onBlur(e);
+				field && field.onBlur && field.onBlur(e);
 			}}
 		/>
 		<FloatingLabel error={error} htmlFor={field.name}>
