@@ -25,7 +25,8 @@ export const signupOnPrisma = (
 	authId: any,
 	authMethod: any,
 	apolloClient: any,
-	query?: any
+	query?: any,
+	queryVariables?: Object
 ) => {
 	return new Promise((resolve, reject) => {
 		apolloClient
@@ -37,6 +38,7 @@ export const signupOnPrisma = (
 					authMethod: authMethod,
 					name: name,
 					email: email,
+					...queryVariables,
 				},
 			})
 			.then((data: any) => {

@@ -88,7 +88,8 @@ export const signupWithoutLogin = (
 	password: string,
 	name: string,
 	apolloClient: any,
-	query?: any
+	query?: any,
+	queryVariables?: any
 ) => {
 	return new Promise((resolve, reject) => {
 		getAuth0().signup(
@@ -102,7 +103,15 @@ export const signupWithoutLogin = (
 			},
 			(err, data) => {
 				if (data) {
-					signupOnPrisma(email, name, data.Id, 'local', apolloClient, query)
+					signupOnPrisma(
+						email,
+						name,
+						data.Id,
+						'local',
+						apolloClient,
+						query,
+						queryVariables
+					)
 						.then(data => {
 							resolve(data);
 						})
