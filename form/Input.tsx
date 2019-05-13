@@ -22,42 +22,45 @@ export const ResetInput = styled.input`
 
 export const FloatingInput: any = styled(ResetInput)`
 	width: 100%;
-	height: 56px;
-	padding-left: 15px; /*  Should be same as Label Margin left */
-	font-size: 14px;
-	padding-top: 29px;
+	/* height: 56px; */
+	padding-left: 0;
+	padding-bottom: 0.65rem;
+	/* padding-left: 15px;  Should be same as Label Margin left */
+	font-size: 100%;
+	/* padding-top: 29px; */
 	position: relative;
-	border: 1px solid;
-	border-color: ${({ error }: any) => (error ? 'red' : '#e7e7e7')};
+	border: none;
+	border-bottom: solid 2px #434343;
+	color: #cdcdcd;
+	/* border-color: ${({ error }: any) => (error ? 'red' : '#e7e7e7')}; */
 	transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
 
 	&:focus {
-		border-color: #000;
+		border-color: #787878;
 	}
 
 	&:focus + label,
 	&:not(:placeholder-shown) + label {
 		/* &:valid + label { */
-		transform: translateY(-12px);
-		font-size: 75%;
+		transform: translateY(-32px);
+		font-size: 100%;
 	}
 `;
 
 export const FloatingLabel: any = styled.label`
 	position: absolute;
-	font-size: 14px;
+	font-size: 100%;
 	color: ${({ error }: any) => (error ? 'red' : '')};
-	margin-left: 15px; /* Should be same as input margin left */
 	line-height: 56px;
-	/* To also make the label clickable */
-	// @todo label is not clickable because z-index is not -1
 	z-index: 1;
+	color: #787878;
+	pointer-events: none;
 	transition: all 150ms ease;
 `;
 
 export const StyledInputWrapper = styled.div`
 	display: flex;
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 `;
 
 interface Props {
@@ -74,7 +77,7 @@ interface Props {
 	onBlur?: any;
 }
 
-const Input: React.SFC<Props> = ({
+const Input: React.SFC<Props & React.HTMLProps<HTMLInputElement>> = ({
 	name,
 	label,
 	field,
@@ -82,6 +85,7 @@ const Input: React.SFC<Props> = ({
 	error,
 	onChange,
 	onBlur,
+	...props
 }) => (
 	<StyledInputWrapper>
 		<FloatingInput
@@ -100,6 +104,7 @@ const Input: React.SFC<Props> = ({
 				onBlur && onBlur(e);
 				field && field.onBlur && field.onBlur(e);
 			}}
+			{...props}
 		/>
 		<FloatingLabel error={error} htmlFor={field.name}>
 			{error || label}

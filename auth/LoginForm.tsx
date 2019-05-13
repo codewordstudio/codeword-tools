@@ -1,32 +1,15 @@
 import React, { Component } from 'react';
 import { Formik, Field, FormikProps, FieldProps, Form } from 'formik';
 import * as Yup from 'yup';
-import { authorize, authorizeWithGoogle } from '../../tools/auth/auth0';
-import styled from 'styled-components';
+import {
+	authorize,
+	authorizeWithGoogle,
+	RequestChangePassword,
+} from '../../tools/auth/auth0';
 import Button from '../../../components/Button';
 // import SocialButton from '../../../components/SocialButton';
 import Input from '../form/Input';
-
-const StyledFormDivider = styled.div`
-	z-index: 0;
-	position: relative;
-	text-align: center;
-	margin: 25px 0;
-	&:before {
-		content: '';
-		position: absolute;
-		top: 50%;
-		left: 0;
-		right: 0;
-		border-bottom: 1px solid #e7e7e7;
-		z-index: -1;
-	}
-`;
-const StyledFormDividerContent = styled.div`
-	display: inline-block;
-	padding: 0 0.5em;
-	background: #fff;
-`;
+import { Link } from 'react-router-dom';
 
 interface LoginProps {}
 interface LoginState {}
@@ -70,50 +53,52 @@ class Login extends Component<LoginProps, LoginState> {
 					});
 				}}
 				render={(formikBag: FormikProps<LoginFormValues>) => (
-					<React.Fragment>
-						<button onClick={authorizeWithGoogle}>Sign In With Google</button>
+					<div className="login-form">
 						<Form>
-							<StyledFormDivider>
-								<StyledFormDividerContent>Or</StyledFormDividerContent>
-							</StyledFormDivider>
-							<Field
-								name="email"
-								render={({ field, form }: FieldProps<LoginFormValues>) => {
-									return (
+							<div className="login-input-wrapper">
+								<Field
+									name="email"
+									render={({ field, form }: FieldProps<LoginFormValues>) => {
+										return (
+											<Input
+												name="email"
+												type="text"
+												label="Email"
+												field={field}
+												error={form.errors.email || ''}
+											/>
+										);
+									}}
+								/>
+							</div>
+							<div className="login-input-wrapper">
+								<Field
+									name="password"
+									render={({ field, form }: FieldProps<LoginFormValues>) => (
 										<Input
-											name="email"
-											type="text"
-											label="Email"
+											name="password"
+											type="password"
+											label="Password"
 											field={field}
-											error={form.errors.email || ''}
+											error={form.errors.password || ''}
 										/>
-									);
-								}}
-							/>
-							<Field
-								name="password"
-								render={({ field, form }: FieldProps<LoginFormValues>) => (
-									<Input
-										name="password"
-										type="password"
-										label="Password"
-										field={field}
-										error={form.errors.password || ''}
-									/>
-								)}
-							/>
+									)}
+								/>
+							</div>
+
+							<Link to="/reset" className="forgot-password">
+								Forgot Password?
+							</Link>
+
 							<button
-								// color="black"
+								className="login-button"
 								type="submit"
-								// design="solid"
-								// large={true}
-								// full={true}
 								disabled={formikBag.isSubmitting}
 							>
-								Login
+								Sign in
 							</button>
 						</Form>
-					</React.Fragment>
+					</div>
 				)}
 			/>
 		);
