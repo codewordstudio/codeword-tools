@@ -73,17 +73,14 @@ class Signup extends Component<any, SignupState> {
 					setSubmitting(false);
 				}}
 				render={(formikBag: FormikProps<SignupFormValues>) => (
-					<React.Fragment>
-						<button onClick={authorizeWithGoogle}>Sign Up With Google</button>
-						<Form>
-							<StyledFormDivider>
-								<StyledFormDividerContent>Or</StyledFormDividerContent>
-							</StyledFormDivider>
+					<Form className="signup-form">
+						<div className="signup-input-wrapper">
 							<Field
 								name="name"
 								render={({ field, form }: FieldProps<SignupFormValues>) => {
 									return (
 										<Input
+											className="signup-input-name"
 											name="name"
 											type="text"
 											label="Your Name"
@@ -93,11 +90,14 @@ class Signup extends Component<any, SignupState> {
 									);
 								}}
 							/>
+						</div>
+						<div className="signup-input-wrapper">
 							<Field
 								name="email"
 								render={({ field, form }: FieldProps<SignupFormValues>) => {
 									return (
 										<Input
+											className="signup-input-email"
 											name="email"
 											type="text"
 											label="Email"
@@ -107,10 +107,13 @@ class Signup extends Component<any, SignupState> {
 									);
 								}}
 							/>
+						</div>
+						<div className="signup-input-wrapper">
 							<Field
 								name="password"
 								render={({ field, form }: FieldProps<SignupFormValues>) => (
 									<Input
+										className="signup-input-password"
 										name="password"
 										type="password"
 										label="Password"
@@ -119,18 +122,15 @@ class Signup extends Component<any, SignupState> {
 									/>
 								)}
 							/>
-							<button
-								// color="black"
-								type="submit"
-								// design="solid"
-								// large={true}
-								// full={true}
-								disabled={formikBag.isSubmitting}
-							>
-								Register
-							</button>
-						</Form>
-					</React.Fragment>
+						</div>
+						<button
+							className="signup-button"
+							type="submit"
+							disabled={formikBag.isSubmitting}
+						>
+							Register
+						</button>
+					</Form>
 				)}
 			/>
 		);
